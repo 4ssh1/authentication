@@ -5,6 +5,6 @@ const { protect, authorise } = require('../controllers/authContoller');
 const router = express.Router();
 
 
-router.post('/create-note', newNote).get("/find-note/:id", getNote).patch("/update/:id", update).delete("/delete/:id", protect, authorise, deleteNote)
+router.post('/create-note', protect, newNote).get("/find-note/:id", protect, getNote).patch("/update/:id",protect, update).delete("/delete/:id", protect, authorise, deleteNote)
 
 module.exports = router

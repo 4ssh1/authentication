@@ -1,7 +1,9 @@
 const Note = require("../model/note");
 const newNote = async (req, res, next) => {
     const {title, content, author} = req.body;
-    const note = await Note.create({title, content, author});
+    const user = req.user;
+    console.log(user)
+    const note = await Note.create({title, content, author, userId: user._id});
     if(!note){
         return res.status(401).json({
             status: "Error",
@@ -19,7 +21,7 @@ const newNote = async (req, res, next) => {
 
 const getNote = async (req, res, next) => {
     const {id} = req.params;
-    const note = await Note.findById(id)
+    const note = await Note.findById(id).populate("userId")
     if(!note){
         return res.status(404).json({
             status: "Error",
